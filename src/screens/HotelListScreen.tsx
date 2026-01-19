@@ -9,6 +9,7 @@ import {
   Alert,
   TextInput,
   TouchableOpacity,
+  Keyboard,
 } from 'react-native';
 import { Hotel, HotelFilters } from '../types/hotel.types';
 import { GetHotelListAsync } from '../services/hotelService';
@@ -65,6 +66,7 @@ export const HotelListScreen: React.FC = () => {
    * Maneja la búsqueda por ubicación
    */
   const handleSearch = () => {
+    Keyboard.dismiss();
     const newFilters: HotelFilters = {
       ...filters,
       location: searchLocation.trim() || undefined,
@@ -107,6 +109,9 @@ export const HotelListScreen: React.FC = () => {
           onChangeText={setSearchLocation}
           onSubmitEditing={handleSearch}
           returnKeyType="search"
+          autoCorrect={false}
+          autoCapitalize="none"
+          editable={!loading && !refreshing}
         />
         <TouchableOpacity style={styles.searchButton} onPress={handleSearch}>
           <Text style={styles.searchButtonText}>🔍 Buscar</Text>
